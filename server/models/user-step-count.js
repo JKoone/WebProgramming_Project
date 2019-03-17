@@ -6,19 +6,35 @@ const model = {
       callback(err, data);
     });
   },
-  get(id, callback){
-
-  },
-  add(input, callback){
-    // ? - We'll pass those values later
-    // Why [[]]
-    //  - We want an array of arrays
-    conn.query("INSERT INTO InClass_Person (FirstName, LastName, Birthday, Password, created_at) VALUES (?)", 
-                [[input.FirstName, input.LastName, input.Birthday, input.Password, new Date()]], 
+  getStepCountForDate(input, callback){
+    conn.query('SELECT * FROM userstepcount WHERE userID=? AND DATE=?',
+                [input.id, input.date],
                 (err, data) => {
-                  callback(err, data);
-                }
-    );
+                  callback(err, data)
+                })
+  },
+  getStepCountSinceDate(input, callback){
+    conn.query('SELECT * FROM userstepcount WHERE userID=? AND DATE >=?',
+              [input.id, input.date],
+              (err,data) => {
+                callback(err, data)
+              })
+  },
+  setStepCountForDate(input, callback){
+    conn.query(`INSERT INTO userstepcount (userID, date, value) 
+                VALUES (?) 
+                ON DUPLICATE KEY UPDATE 
+                value=?`, 
+                [[input.id, input.date, input.value], input.value],
+                (err, data) => {
+                  if(err){
+                    callback(err)
+                    return
+                  }
+                  model.getStepCountForDate(input, (err, data) => {
+                    callback(err, data[0])
+                  })
+                })
   }
 
 };

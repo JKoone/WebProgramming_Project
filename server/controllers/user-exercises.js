@@ -6,17 +6,36 @@ const userExerciseModel = require("../models/user-exercise");
 // Mapping routes to functions
 app.get("/", (req, res) => {
   userExerciseModel.getAll((err, data) => {
-    if(err) throw err;
-    res.send(data);
-  })
-});
-
-app.post("/", (req, res) => {
-  userExerciseModel.add({}, (err, data) => {
-    if(err) throw err;
-    //
+    if(err){
+      res.status(400).send({error: err})
+      return
+    }
+    res.send(data)
   })
 })
+// getExercisesForDate
+// Expects query to contain userID, date
+app.get('/getExercisesForDate', (req, res) => {
+  userExerciseModel.getExercisesForDate(req.query, (err, data) => {
+    if(err){
+      res.status(400).send({error: err})
+      return
+    }
+    res.send(data)
+  })
+})
+// addExerciseForUser
+// Expects body to contain userID, exerciseID, date and duration
+app.post("/addExerciseForUser", (req, res) => {
+  userExerciseModel.addExerciseForUser(req.body, (err, data) => {
+    if(err){
+      res.status(400).send({error: err})
+      return
+    }
+    res.send(data)
+  })
+})
+
 
 
 // Equivalent to return for require

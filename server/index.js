@@ -1,4 +1,5 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const app = express()
 const port = 3000
 
@@ -8,6 +9,9 @@ const userFriends = require('./controllers/user-friends')
 const exercises = require('./controllers/exercises')
 const userExercises = require('./controllers/user-exercises')
 const userStepCount = require('./controllers/user-step-counts')
+
+// Allow app to parse json
+app.use(bodyParser.json())
 
 app.get('/', (req, res) => res.send('Hello World!'))
 

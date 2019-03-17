@@ -6,19 +6,25 @@ const model = {
       callback(err, data);
     });
   },
-  get(id, callback){
-
+  getExercisesForDate(input, callback){
+    conn.query("SELECT * FROM userexercises WHERE date=?",
+              [input.date],
+              (err, data) => {
+                callback(err,data)
+              })
   },
-  add(input, callback){
-    // ? - We'll pass those values later
-    // Why [[]]
-    //  - We want an array of arrays
-    conn.query("INSERT INTO InClass_Person (FirstName, LastName, Birthday, Password, created_at) VALUES (?)", 
-                [[input.FirstName, input.LastName, input.Birthday, input.Password, new Date()]], 
-                (err, data) => {
-                  callback(err, data);
+  addExerciseForUser(input, callback){
+    conn.query("INSERT INTO userexercises (userID, exerciseID, date, duration) VALUES (?)",
+              [[input.userID, input.exerciseID, input.date, input.duration]],
+              (err, data) => {
+                if(err){
+                  callback(err)
+                  return
                 }
-    );
+                model.getExercisesForDate(input, (err,data) => {
+                  callback(err, data)
+                })
+              })
   }
 
 };
