@@ -3,7 +3,7 @@ const mysql = require("mysql");
               require('dotenv').load();
 // Don't use this, we are going to use connection pooling.
 //const conn = mysql.createConnection({});
-
+const util = require("util");
 
 const conn = mysql.createPool({
   host: process.env.MYSQL_HOST,
@@ -13,5 +13,7 @@ const conn = mysql.createPool({
   database: process.env.MYSQL_DB,
   connectionLimit: 10,
 });
+
+conn.query = util.promisify(conn.query) // Magic happens here.
 
 module.exports = conn;

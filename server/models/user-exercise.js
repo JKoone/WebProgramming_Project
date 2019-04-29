@@ -1,30 +1,23 @@
 const conn = require("./mysql-connection");
 
 const model = {
-  getAll(callback){
-    conn.query("SELECT * FROM userexercises", (err, data) => {
-      callback(err, data);
-    });
+  async getAll(){
+    return await conn.query("SELECT * FROM userexercises");
   },
-  getExercisesForDate(input, callback){
-    conn.query("SELECT * FROM userexercises WHERE date=?",
-              [input.date],
-              (err, data) => {
-                callback(err,data)
-              })
+  // Values were getting overwritten. Had to switch the join order Exercises -> Userexercises
+  async getExercisesForDate(input){
+    return await conn.query(
+                          "SELECT * FROM exercises e \
+                          INNER JOIN userexercises ue on ue.exerciseID = e.id \
+                          WHERE date=? AND ue.userID=?",
+                          [input.date, input.id]
+    );
   },
-  addExerciseForUser(input, callback){
-    conn.query("INSERT INTO userexercises (userID, exerciseID, date, duration) VALUES (?)",
-              [[input.userID, input.exerciseID, input.date, input.duration]],
-              (err, data) => {
-                if(err){
-                  callback(err)
-                  return
-                }
-                model.getExercisesForDate(input, (err,data) => {
-                  callback(err, data)
-                })
-              })
+  async addExerciseForUser(input, callback){
+    await conn.query("INSERT INTO userexercises (userID, exerciseID, date, duration) VALUES (?)",
+              [[input.userID, input.exerciseID, input.date, input.duration]]
+    );
+    return await model.getExercisesForDate(input);
   }
 
 };
