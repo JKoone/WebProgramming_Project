@@ -80,7 +80,6 @@ export default {
     methods: {
         async submit(){
             try {
-              console.log(this.data);
               const m = await Register(this.data);
               this.newUser = m;
               // Redirect to the home page.. 

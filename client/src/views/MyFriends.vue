@@ -13,8 +13,7 @@
       </div>
       <ul class="list-group">
         <li class="list-group-item" v-for="friend in friends" v-bind:key="friend.id">
-          First Name: {{friend.FirstName}}
-          Last Name: {{friend.LastName}}
+          {{friend.FirstName}} {{friend.LastName}}
           <div class="float-lg-right">
           <button 
           class="btn btn-secondary"
@@ -30,15 +29,12 @@
         </li>
       </ul>
     </div>
-    <AddFriendModal ref="modal"></AddFriendModal>
   </div>
 </template>
 
 <script>
 import { Globals } from "@/models/api";
 import { GetFriends, RemoveFriend } from "@/models/userfriends";
-import AddFriendModal from "@/components/AddFriendModal";
-import $ from 'jquery';
 export default {
   data: () => ({
     Globals: Globals,
@@ -46,11 +42,6 @@ export default {
     friends: null
   }),
   methods: {
-    showModal(){
-      console.log("Here-ShowModal");
-      let element = this.$refs.modal.$el
-      $(element).modal('show')
-    },
     navigateTo(route){
       this.$router.push(route);
     },
@@ -68,10 +59,6 @@ export default {
   async mounted(){
     this.friends = await GetFriends();
   }, 
-
-  components: {
-    AddFriendModal
-  },
 }
 </script>
 

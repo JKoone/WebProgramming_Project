@@ -5,7 +5,6 @@ import MyFriends from "./views/MyFriends.vue";
 import AddFriends from "./views/AddFriends.vue";
 import Register from "./views/Register.vue";
 import Login from "./views/Login.vue";
-import Steps from "./views/Steps.vue";
 import ExerciseLog from "./views/ExerciseLog.vue";
 import AddExercise from "./views/AddExercise.vue";
 import AddSteps from "./views/AddSteps.vue";
@@ -42,11 +41,6 @@ const router = new Router({
       path: '/myfriends/addfriends',
       name: 'addfriends',
       component: AddFriends
-    },
-    {
-      path: '/steps',
-      name: 'steps',
-      component: Steps 
     },
     {
       path: '/exerciselog',

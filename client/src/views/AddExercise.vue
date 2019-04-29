@@ -122,12 +122,10 @@ export default {
   }),
   async mounted() {
     this.exercises = await GetAllExercises()
-    console.log(this.exercises)
   },
   methods: {
     async createExercise() {
       try {
-      console.log(this.newExercise);
       const newExercise = await AddExercise(this.newExercise)
       this.addNewExercise = false;
       this.selectedExercise = newExercise;
@@ -139,7 +137,6 @@ export default {
       try {
         const totalDurationMinutes = Number(this.durationHours*60) + Number(this.durationMinutes);
         const exerciseToAdd = {...this.selectedExercise, exerciseID: this.selectedExercise.id, date: this.exerciseDate, duration: totalDurationMinutes}
-        console.log(exerciseToAdd)
         const x = await AddExerciseForUser(exerciseToAdd)
         this.$router.push({name: "exerciselog"})
       } catch(error) {

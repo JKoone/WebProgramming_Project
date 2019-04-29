@@ -50,7 +50,6 @@ export default {
    },
    async setStepCountForDate() {
      try{
-       console.log("Here");
        const x = await setStepCountForDate(this.viewDate, this.stepCount);
        toastr.success("Steps Updated!");
        this.$router.push({name: "exerciselog"})
