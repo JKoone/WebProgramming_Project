@@ -6,9 +6,11 @@ export async function GetAllExercises(){
 }
 
 export async function GetExerciseWithName(name){
-  let params = {name: name};
 
+  let searchString = name.trim()+".*";
+  let params = {exerciseName: searchString};
   const x = await apiGet("exercises/getExerciseWithName", params);
+  console.log(x);
   return x;
 
 }

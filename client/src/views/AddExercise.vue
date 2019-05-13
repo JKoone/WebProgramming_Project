@@ -9,6 +9,15 @@
             @click="addNewExercise=true"
             />
         </nav>
+        <div class="search">
+          <span class="fa fa-search"></span>
+          <input type="text" 
+                class="form-control" 
+                v-model="exerciseSearch" 
+                @input="findExercise" 
+                @change="findExercise" 
+                placeholder="Search Exercises...."/>
+        </div>
         <div class="list-group"> 
           <button 
             type="button" 
@@ -98,9 +107,12 @@
 
 <script>
 import { getFormattedDate } from "@/models/dateUtils";
-import { GetAllExercises, AddExercise } from "@/models/exercises";
+import { GetAllExercises, AddExercise, GetExerciseWithName } from "@/models/exercises";
 import { AddExerciseForUser } from "@/models/userexercises";
 export default {
+  components: {
+    vSelect
+  },
   data: () => ({
     addNewExercise: false,
     newExercise: {
@@ -118,7 +130,8 @@ export default {
     selectedExercise: null,
     durationHours: null,
     durationMinutes: null,
-    exerciseDate: getFormattedDate(new Date())
+    exerciseDate: getFormattedDate(new Date()),
+    exerciseSearch: ""
   }),
   async mounted() {
     this.exercises = await GetAllExercises()
@@ -142,11 +155,35 @@ export default {
       } catch(error) {
         console.log(error);
       }
+    },
+    async findExercise() {
+      console.log(this.exerciseSearch);
+      this.exercises = await GetExerciseWithName(this.exerciseSearch);
     }
   }
 }
 </script>
 
 <style>
+.search {
+  position: relative;
+  color: #aaa;
+  font-size: 16px;
+}
 
+.search input {
+  height: 32px;
+
+  background: #fcfcfc;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  box-shadow: 0 0 3px #ccc, 0 10px 15px #ebebeb inset;
+}
+
+.search input { text-indent: 32px;}
+.search .fa-search { 
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
 </style>

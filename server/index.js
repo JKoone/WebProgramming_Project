@@ -23,8 +23,8 @@ app.use(bodyParser.json())
 app.use(cors())
 
 app.use(function(req, res, next) {
-  console.log(req);
-  /*try {
+ /* console.log(req);
+  try {
     console.log(req.headers.authorization);
     const token = (req.headers.authorization || "").split(' ')[1]
     console.log(token);
@@ -35,7 +35,8 @@ app.use(function(req, res, next) {
     if(req.method != "OPTIONS" && !openActions.includes(req.method + req.path.toLowerCase())){ // check if login required
       next(Error("Login Required"));
     }
-  }*/
+  }
+  */
   next();
 });
 

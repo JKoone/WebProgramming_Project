@@ -3,8 +3,10 @@
 @import 'toastr/toastr.scss';
 $icon-font-path: "~open-iconic/font/fonts/";
 @import 'open-iconic/font/css/open-iconic-bootstrap.scss';
-
-
+$fa-font-path: "~font-awesome/fonts";
+@import '~font-awesome/scss/font-awesome.scss';
+// vue-select
+@import "vue-select/src/scss/vue-select.scss";
 #main {
   margin-top: 75px;
 }

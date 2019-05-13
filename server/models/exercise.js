@@ -6,7 +6,7 @@ const model = {
   },
   async getExerciseWithName(input, callback){
     return await conn.query(
-                            "SELECT * FROM exercises WHERE exerciseName=?",
+                            "SELECT * FROM exercises WHERE exerciseName REGEXP ?",
                             [input.exerciseName]
     );
   },

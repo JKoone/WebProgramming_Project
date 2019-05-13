@@ -17,7 +17,7 @@
         <nav class="navbar navbar-dark bg-dark">
           <span class="navbar-brand mb-0 h1">Exercises</span>
           <button v-if="isMyLog"
-            class="btn btn-success float-right oi oi-plus"
+            class="btn btn-success float-right fa fa-plus"
             @click="navigateTo({name: 'addexercise'})"
             />
         </nav>
