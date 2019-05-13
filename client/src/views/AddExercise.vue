@@ -110,9 +110,6 @@ import { getFormattedDate } from "@/models/dateUtils";
 import { GetAllExercises, AddExercise, GetExerciseWithName } from "@/models/exercises";
 import { AddExerciseForUser } from "@/models/userexercises";
 export default {
-  components: {
-    vSelect
-  },
   data: () => ({
     addNewExercise: false,
     newExercise: {
@@ -133,9 +130,9 @@ export default {
     exerciseDate: getFormattedDate(new Date()),
     exerciseSearch: ""
   }),
-  async mounted() {
-    this.exercises = await GetAllExercises()
-  },
+  //async mounted() {
+   // this.exercises = await GetAllExercises()
+  //},
   methods: {
     async createExercise() {
       try {
@@ -157,6 +154,10 @@ export default {
       }
     },
     async findExercise() {
+      if(this.exerciseSearch.trim() == "") {
+        this.exercises = [];
+        return;
+      }
       console.log(this.exerciseSearch);
       this.exercises = await GetExerciseWithName(this.exerciseSearch);
     }
